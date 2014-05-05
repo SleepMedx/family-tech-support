@@ -11,4 +11,7 @@ sudo /usr/sbin/installer -pkg /Volumes/TeamViewer/Install\ TeamViewer.pkg -targe
 # Unmount the volume when done
 umount /Volumes/TeamViewer
 
+# Clean up
+rm -f ~/Downloads/TeamViewer.dmg
+
 #pkgutil --expand /Volumes/TeamViewer/Install\ TeamViewer.pkg /tmp/TeamViewer
