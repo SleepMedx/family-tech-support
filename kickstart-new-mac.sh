@@ -7,7 +7,7 @@
 	orgName="com.jacobsalmela.scripts"
 	loginWindowText=$(hostname)
 	osVersion=$(sw_vers -productVersion | awk -F. '{print $2}')
-    swVersion=$(sw_vers -productVersion)
+    	swVersion=$(sw_vers -productVersion)
 
 #----------FUNCTIONS---------
 ###############################
@@ -49,7 +49,7 @@ function installEssentialApps()
 ##########################
 function systemSettings()
 	{
-    echo "******Deploying system-wide settings******"
+    	echo "******Deploying system-wide settings******"
     
 	echo -e "\tEnabling access to assistive devices..."
 	case ${OSTYPE} in
@@ -60,11 +60,11 @@ function systemSettings()
  	esac
 
 	echo -e "\tDisabling prompt to use drives for Time Machine..."
-    defaults write /Library/Preferences/com.apple.TimeMachine.plist DoNotOfferNewDisksForBackup -bool true
+    	defaults write /Library/Preferences/com.apple.TimeMachine.plist DoNotOfferNewDisksForBackup -bool true
     
-    echo -e "\tDisabling external accounts..."
-    # Disable external accounts (i.e. accounts stored on drives other than the boot drive.)
-    defaults write /Library/Preferences/com.apple.loginwindow.plist EnableExternalAccounts -bool false
+    	echo -e "\tDisabling external accounts..."
+    	# Disable external accounts (i.e. accounts stored on drives other than the boot drive.)
+    	defaults write /Library/Preferences/com.apple.loginwindow.plist EnableExternalAccounts -bool false
 
 	echo -e "\tAdding information to login window..."
 	defaults write /Library/Preferences/com.apple.loginwindow.plist AdminHostInfo HostName
