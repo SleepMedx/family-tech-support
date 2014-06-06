@@ -34,6 +34,11 @@ function installEssentialApps()
 	brew cask install totalfinder
 	brew cask install totalterminal
 	
+	}
+
+###########################
+function quickLookPlugins()
+	{
 	# QuickLook Enhancements
 	brew cask install qlcolorcode
 	brew cask install qlimagesize
@@ -44,6 +49,31 @@ function installEssentialApps()
 	brew cask install quicklook-csv
 	brew cask install quicklook-json
 	brew cask install quicklook-pfm
+	
+	# ScriptQL QuickLook Plugin
+	curl -o ~/Downloads/ScriptQL_qlgenerator.zip http://www.kainjow.com/downloads/ScriptQL_qlgenerator.zip 
+	unzip ~/Downloads/ScriptQL_qlgenerator.zip
+	rm ~/Downloads/ScriptQL_qlgenerator.zip
+
+	# SuspiciousPackage QuickLook Plugin
+	curl -o ~/Downloads/SuspiciousPackage.dmg http://www.mothersruin.com/software/downloads/SuspiciousPackage.dmg
+	hdiutil mount ì/Downloads/SuspiciousPackage.dmg
+	cp -R /Volumes/Suspicious\ Package/Suspicious\ Package.qlgenerator/ ~/Library/QuickLook/Suspicious\ Package.qlgenerator
+	umount /Volumes/Suspicious\ Package/
+	rm ~/Downloads/SuspiciousPackage.dmg
+
+	# Archive QuickLook Plugin
+	curl -o ~/Downloads/Archive.zip http://www.qlplugins.com/sites/default/files/plugins/Archive.zip
+	unzip ~/Downloads/Archive.zip
+	mv ~/Downloads/Archive/Archive.qlgenerator ~/Library/QuickLook/Archive.qlgenerator
+	rm -rf ~/Downloads/Archive
+	rm ~/Downloads/Archive.zip
+
+	# QLEnscript QuickLook Plugin
+	curl -o ~/Downloads/QLEnscript.qlgenerator-1.0.zip http://www.qlplugins.com/sites/default/files/plugins/QLEnscript.qlgenerator-1.0.zip
+	unzip ~/Downloads/QLEnscript.qlgenerator-1.0.zip
+	mv ~/Downloads/QLEnscript.qlgenerator ~/Library/QuickLook/
+	rm ~/Downloads/QLEnscript.qlgenerator-1.0.zip
 	}
 
 ##########################
@@ -267,6 +297,7 @@ function customPlist()
 #-------BEGIN SCRIPT-----------
 #------------------------------	
 installEssentialApps
+quickLookPlugins
 systemSettings
 finderSettings
 dockSettings
