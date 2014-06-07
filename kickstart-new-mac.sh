@@ -33,6 +33,7 @@ function installEssentialApps()
 	# OS improvements
 	brew cask install totalfinder
 	brew cask install totalterminal
+	brew cask install deathtodsstore
 	
 	}
 
