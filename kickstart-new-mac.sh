@@ -131,6 +131,15 @@ function systemSettings()
 	
 	echo -e "\tMaking scrollbars always visible..."
 	defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+	
+	echo -e "\tDisabling crash report dialogs..."
+	defaults write com.apple.CrashReporter DialogType none
+	
+	echo -e "\tEnabling secure virtual memory..."
+	sudo defaults write /Library/Preferences/com.apple.virtualMemory UseEncryptedSwap -bool yes
+	
+	echo -e "\tSetting time to 24-hour..."
+	defaults write NSGlobalDomain AppleICUForce12HourTime -bool false
 	}
 	
 #########################
@@ -197,6 +206,12 @@ function finderSettings()
 	
 	echo -e "\tDeath to network .DS_Stores..."
 	defaults write com.apple.desktopservices DSDontWriteNetworkStores true
+	
+	echo -e "\tMaking window animations faster..."
+	defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+
+	echo -e "\tMaking QuickLook anitmation faster..."
+	defaults write -g QLPanelAnimationDuration -float 0
 	
 	echo -e "\tMaking the ~/Library folder visible for $adminUser..."
 	su "$adminUser" -c "chflags nohidden ~/Library/"
@@ -283,8 +298,58 @@ function otherSettings()
 	
 	echo -e "\tIncreasing sound quality of Bluetooth and headphones..."
 	defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+	
+	echo -e "\tDisabling iCloud as the default save location..."
+	defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false
+	
+	echo -e "\tMaking the scroll dragging speed faster..."
+	defaults write -g NSAutoscrollResponseMultiplier -float 3
 	}
 
+##################################
+function activityMonitorSettings()
+	{
+	echo "******Deploying Activity Monitor settings******"
+	
+	echo "**------------ACTIVITY MONITOR---------"
+
+	echo -e "\tSetting the Dock icon to show CPU usage..."
+	defaults write com.apple.ActivityMonitor IconType -int 5
+
+	echo -e "\tShowing all processes by default..."
+	defaults write com.apple.ActivityMonitor ShowCategory -int 100
+	
+	echo -e "\tMavericks: Adding the % CPU column to the Disk and Network tabs..."
+	defaults write com.apple.ActivityMonitor "UserColumnsPerTab v4.0" -dict \
+	    '0' '( Command, CPUUsage, CPUTime, Threads, IdleWakeUps, PID, UID )' \
+	    '1' '( Command, anonymousMemory, Threads, Ports, PID, UID, ResidentSize )' \
+	    '2' '( Command, PowerScore, 12HRPower, AppSleep, graphicCard, UID )' \
+	    '3' '( Command, bytesWritten, bytesRead, Architecture, PID, UID, CPUUsage )' \
+	    '4' '( Command, txBytes, rxBytes, txPackets, rxPackets, PID, UID, CPUUsage )'
+
+	echo -e "\tMavericks: Sort by CPU usage in Disk and Network tabs..."
+	defaults write com.apple.ActivityMonitor UserColumnSortPerTab -dict \
+	    '0' '{ direction = 0; sort = CPUUsage; }' \
+	    '1' '{ direction = 0; sort = ResidentSize; }' \
+	    '2' '{ direction = 0; sort = 12HRPower; }' \
+	    '3' '{ direction = 0; sort = CPUUsage; }' \
+	    '4' '{ direction = 0; sort = CPUUsage; }'	
+	}
+
+#########################	
+function safariSettings()
+	{
+	echo "******Deploying Safari settings******"
+	
+	echo "**------------SAFARI---------"
+	
+	echo -e "\tShowing status bar..."	
+	defaults write com.apple.Safari ShowStatusBar -bool true
+
+	echo -e "\Enabling favorites bar..."
+	defaults write com.apple.Safari ShowFavoritesBar -bool true	
+	}
+	
 ######################
 function customPlist()
 	{
@@ -302,6 +367,8 @@ quickLookPlugins
 systemSettings
 finderSettings
 dockSettings
+activityMonitorSettings
+safariSettings
 otherSettings
 powerSettings
 customPlist
