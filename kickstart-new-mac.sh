@@ -209,6 +209,7 @@ function finderSettings()
 	
 	echo -e "\tMaking window animations faster..."
 	defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+	defaults write com.apple.finder DisableAllAnimations -bool true
 
 	echo -e "\tMaking QuickLook anitmation faster..."
 	defaults write -g QLPanelAnimationDuration -float 0
