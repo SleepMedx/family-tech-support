@@ -20,12 +20,11 @@ function enableAccessiblityAndInstallXcodeCLT()
 	xcode-select --install
 	
 	# Click buttons on behalf of the user
-	#osascript -e <<EOF 'tell application "System Events"
-    	#tell process "Install Command Line Developer Tools"
-        #click button "Install" of window 1
-    	#end tell
-	#end tell'
-	#EOF
+	osascript -e <<EOF 'tell application "System Events"
+    	tell process "Install Command Line Developer Tools"
+        click button "Install" of window 1
+    	end tell
+	end tell'EOF
 	
 	#osascript -e <<EOF 'tell application "System Events"
     	#tell process "Install Command Line Developer Tools"
@@ -388,6 +387,7 @@ function customPlist()
 #------------------------------		
 #-------BEGIN SCRIPT-----------
 #------------------------------	
+sudo -v
 enableAccessiblityAndInstallXcodeCLT
 installEssentialApps
 quickLookPlugins
