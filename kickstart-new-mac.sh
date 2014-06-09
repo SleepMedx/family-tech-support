@@ -10,6 +10,31 @@
     	swVersion=$(sw_vers -productVersion)
 
 #----------FUNCTIONS---------
+###############################################
+function enableAccessiblityAndInstallXcodeCLT()
+	{
+	# Add ARDAgent.app to the Accessibility DB, allowing it access to click buttons and type keystrokes
+	sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);"
+	
+	# Trigger the install of Xcode command line tools--required for homebrew stuff
+	xcode-select --install
+	
+	# Click buttons on behalf of the user
+	osascript -e <<EOF 'tell application "System Events"
+    	tell process "Install Command Line Developer Tools"
+        click button "Install" of window 1
+    	end tell
+	end tell'
+	EOF
+	
+	osascript -e <<EOF 'tell application "System Events"
+    	tell process "Install Command Line Developer Tools"
+        click button "Agree" of window "License Agreement"
+    	end tell
+	end tell'
+	EOF	
+	}
+	
 ###############################
 function installEssentialApps()
 	{
@@ -363,6 +388,7 @@ function customPlist()
 #------------------------------		
 #-------BEGIN SCRIPT-----------
 #------------------------------	
+enableAccessiblityAndInstallXcodeCLT
 installEssentialApps
 quickLookPlugins
 systemSettings
