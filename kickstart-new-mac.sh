@@ -21,15 +21,10 @@ function installEssentialApps()
 	brew cask install firefox
 	
 	# Backup and syncing
-	brew cask install crashplan
 	brew cask install dropbox
-	
-	# Password and bookmark managements
-	brew cask install lastpass-universal
 	
 	# OS improvements
 	brew cask install totalfinder
-	brew cask install totalterminal
 	brew cask install deathtodsstore
 	}
 
@@ -346,7 +341,8 @@ function safariSettings()
 	echo -e "\Enabling favorites bar..."
 	defaults write com.apple.Safari ShowFavoritesBar -bool true	
 	}
-	
+
+
 ######################
 function customPlist()
 	{
@@ -355,6 +351,7 @@ function customPlist()
 	# Creates a custom plist
 	defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
 	}
+
 
 #------------------------------		
 #-------BEGIN SCRIPT-----------
@@ -370,4 +367,12 @@ safariSettings
 otherSettings
 powerSettings
 customPlist
+# Apps requiring user interaction to install last
+brew cask install lastpass-universal
+if [$? = 0 ];
+then
+	brew cask install crashplan
+else
+	echo "last-pass fail."
+fi
 echo "******COMPLETE******"
