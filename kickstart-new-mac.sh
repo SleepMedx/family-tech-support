@@ -24,7 +24,6 @@ function installEssentialApps()
 	brew cask install dropbox
 	
 	# OS improvements
-	brew cask install totalfinder
 	brew cask install deathtodsstore
 	}
 
@@ -372,6 +371,11 @@ brew cask install lastpass-universal
 if [$? = 0 ];
 then
 	brew cask install crashplan
+	if [ $? = 0 ];then
+		brew cask install totalfinder
+	else
+		echo "TotalFinder fail."
+	fi
 else
 	echo "last-pass fail."
 fi
