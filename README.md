@@ -7,7 +7,7 @@
 ## Kickstart New Macs
 Deploys software and settings to make the OS X experience better.
 
-1. Copy and **paste this command** in Terminal: `curl -s http://goo.gl/tV2L8n | bash`
+1. Copy and **paste this command** in Terminal: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/kickstart-new-mac.sh | bash`
 2. Press **Enter**
 3. Enter your password when prompted
 
