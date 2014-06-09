@@ -3,42 +3,15 @@
 
 #----------VARIABLES---------
 	# Change the variables below per your environment
-	adminUser=$(whoami)
 	orgName="com.jacobsalmela.scripts"
 	loginWindowText=$(hostname)
 	osVersion=$(sw_vers -productVersion | awk -F. '{print $2}')
     	swVersion=$(sw_vers -productVersion)
 
 #----------FUNCTIONS---------
-###############################################
-function enableAccessiblityAndInstallXcodeCLT()
-	{
-	# Add ARDAgent.app to the Accessibility DB, allowing it access to click buttons and type keystrokes
-	sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);"
-	
-	# Trigger the install of Xcode command line tools--required for homebrew stuff
-	xcode-select --install
-	
-	# Click buttons on behalf of the user
-	osascript -e <<EOF'tell application "System Events" 
-	tell process "Install Command Line Developer Tools" 
-	click button "Install" of window 1 
-	end tell 
-	end tell'EOF
-	
-	#osascript -e <<EOF 'tell application "System Events"
-    	#tell process "Install Command Line Developer Tools"
-        #click button "Agree" of window "License Agreement"
-    	#end tell
-	#end tell'
-	EOF	
-	}
-	
 ###############################
 function installEssentialApps()
 	{
-	# Install homebrew and update
-	ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 	brew update
 	brew tap caskroom/cask
 	brew install caskroom/cask/brew-cask
@@ -58,7 +31,6 @@ function installEssentialApps()
 	brew cask install totalfinder
 	brew cask install totalterminal
 	brew cask install deathtodsstore
-	
 	}
 
 ###########################
@@ -239,7 +211,7 @@ function finderSettings()
 	defaults write -g QLPanelAnimationDuration -float 0
 	
 	echo -e "\tMaking the ~/Library folder visible for $adminUser..."
-	su "$adminUser" -c "chflags nohidden ~/Library/"
+	chflags nohidden ~/Library/
 	}
 	
 #######################	
@@ -388,7 +360,6 @@ function customPlist()
 #-------BEGIN SCRIPT-----------
 #------------------------------	
 sudo -v
-enableAccessiblityAndInstallXcodeCLT
 installEssentialApps
 quickLookPlugins
 systemSettings
