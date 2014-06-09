@@ -5,6 +5,7 @@
 3. Enter your password when prompted
 
 ## Kickstart New Macs
+Deploys software and settings to make the OS X experience better.
 1. Copy and **paste this command** in Terminal: `curl -s http://goo.gl/tV2L8n | bash`
 2. Press **Enter**
 3. Enter your password when prompted
@@ -14,4 +15,13 @@
 2. Press **Enter**
 3. Enter your password when prompted
 
+## Re-index GarageBand Loops
+1. Copy and **paste this command** in Terminal: `curl -s | bash`
+2. Press **Enter**
+3. Enter your password when prompted
+
+## Remove Duplicates in "Open With..." Menu
+1. Copy and **paste this command** in Terminal: `curl -s  | bash`
+2. Press **Enter**
+3. Enter your password when prompted
 
