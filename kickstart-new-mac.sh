@@ -48,9 +48,9 @@ function quickLookPlugins()
 	brew cask install quicklook-pfm
 	
 	# ScriptQL QuickLook Plugin
-	curl -o ~/Downloads/ScriptQL_qlgenerator.zip http://www.kainjow.com/downloads/ScriptQL_qlgenerator.zip 
-	unzip ~/Downloads/ScriptQL_qlgenerator.zip
-	rm ~/Downloads/ScriptQL_qlgenerator.zip
+	#curl -o ~/Downloads/ScriptQL_qlgenerator.zip http://www.kainjow.com/downloads/ScriptQL_qlgenerator.zip 
+	#unzip ~/Downloads/ScriptQL_qlgenerator.zip
+	#rm ~/Downloads/ScriptQL_qlgenerator.zip
 
 	# SuspiciousPackage QuickLook Plugin
 	curl -o ~/Downloads/SuspiciousPackage.dmg http://www.mothersruin.com/software/downloads/SuspiciousPackage.dmg
@@ -67,10 +67,10 @@ function quickLookPlugins()
 	rm ~/Downloads/Archive.zip
 
 	# QLEnscript QuickLook Plugin
-	curl -o ~/Downloads/QLEnscript.qlgenerator-1.0.zip http://www.qlplugins.com/sites/default/files/plugins/QLEnscript.qlgenerator-1.0.zip
-	unzip ~/Downloads/QLEnscript.qlgenerator-1.0.zip
-	mv ~/Downloads/QLEnscript.qlgenerator ~/Library/QuickLook/
-	rm ~/Downloads/QLEnscript.qlgenerator-1.0.zip
+	#curl -o ~/Downloads/QLEnscript.qlgenerator-1.0.zip http://www.qlplugins.com/sites/default/files/plugins/QLEnscript.qlgenerator-1.0.zip
+	#unzip ~/Downloads/QLEnscript.qlgenerator-1.0.zip
+	#mv ~/Downloads/QLEnscript.qlgenerator ~/Library/QuickLook/
+	#rm ~/Downloads/QLEnscript.qlgenerator-1.0.zip
 	}
 
 ##########################
