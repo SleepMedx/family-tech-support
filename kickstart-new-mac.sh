@@ -124,11 +124,11 @@ function systemSettings()
 	sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 	
 	echo -e "\tDisabling smart-quotes and smart-dashes..."
-	sudo defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-	sudo defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist NSAutomaticQuoteSubstitutionEnabled -bool false
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist NSAutomaticDashSubstitutionEnabled -bool false
 	
 	echo -e "\tMaking scrollbars always visible..."
-	sudo defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist AppleShowScrollBars -string "Always"
 	
 	echo -e "\tDisabling crash report dialogs..."
 	sudo defaults write com.apple.CrashReporter DialogType none
@@ -137,7 +137,12 @@ function systemSettings()
 	sudo defaults write /Library/Preferences/com.apple.virtualMemory UseEncryptedSwap -bool yes
 	
 	echo -e "\tSetting time to 24-hour..."
-	sudo defaults write NSGlobalDomain AppleICUForce12HourTime -bool false
+	sudo defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+	/usr/libexec/PlistBuddy -c "Add :AppleICUTDateFormatStrings:1:y-MM-d" /Library/Preferences/.GlobalPreferences.plist
+	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:1:kk:mm" /Library/Preferences/.GlobalPreferences.plist
+	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:2:kk:mm:ss" /Library/Preferences/.GlobalPreferences.plist
+	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:3:kk:mm:ss z" /Library/Preferences/.GlobalPreferences.plist
+	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:4:kk:mm:ss zzzz" /Library/Preferences/.GlobalPreferences.plist
 	}
 	
 #########################
