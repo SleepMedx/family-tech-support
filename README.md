@@ -1,28 +1,19 @@
 **BTC Donations**: `1DzPaoarz8pCV8wMg96hAGYgW2coJd798K`
 ## TeamViewer Install
-1. Copy and **paste this command** in Terminal: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/install-teamviewer.sh | bash`
-2. Press **Enter**
-3. Enter your password when prompted
+1. Install Homebrew `ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"` if not already installed
+2. Run the script: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/install-teamviewer.sh | bash`
 
 ## Kickstart New Macs
-Deploys software and settings to make the OS X experience better.
-
-1. Copy and **paste this command** in Terminal: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/kickstart-new-mac.sh | bash`
-2. Press **Enter**
-3. Enter your password when prompted
+1. Install Homebrew `ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"` if not already installed
+2. Run the script: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/kickstart-new-mac.sh | bash`
 
 ## Set Default Apps
-1. Copy and **paste this command** in Terminal: `curl -s http://goo.gl/wJfHtO | bash`
-2. Press **Enter**
-3. Enter your password when prompted
+1. Run the script: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/set-default-apps.sh | bash`
 
 ## Re-index GarageBand Loops
-1. Copy and **paste this command** in Terminal: `curl -s | bash`
-2. Press **Enter**
-3. Enter your password when prompted
+1. Run the script: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/re-index-garageband-loops.sh | bash`
 
 ## Remove Duplicates in "Open With..." Menu
-1. Copy and **paste this command** in Terminal: `curl -s  | bash`
-2. Press **Enter**
-3. Enter your password when prompted
+1. Run the script: `curl -s https://raw.githubusercontent.com/jacobsalmela/family-tech-support/master/remove-duplicates-in-open-with-menu.sh | bash`
+
 
