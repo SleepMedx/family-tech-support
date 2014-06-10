@@ -82,7 +82,10 @@ function systemSettings()
  		darwin11*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin12*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin13*) sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);";
- 			sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
+ 				sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.LockScreen',0,1,1,NULL);";
+ 		            	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.systemevents',0,1,1,NULL);";
+ 		        	sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/say',0,1,1,NULL);";
+ 				sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
  	esac
 
 	echo -e "\tDisabling prompt to use drives for Time Machine..."
