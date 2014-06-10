@@ -10,12 +10,39 @@
     	currentDate=$(date +"%Y-%m-%d %H:%M:%S")
 
 #----------FUNCTIONS---------
+###############################################
+function enableAccessiblityAndInstallXcodeCLT()
+	{
+	# Add ARDAgent.app to the Accessibility DB, allowing it access to click buttons and type keystrokes
+	sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);"
+	
+	xcode-select --install
+
+	# Click buttons on behalf of the user
+	osascript -e <<EOF 'tell application "System Events"
+    	tell process "Install Command Line Developer Tools"
+        click button "Install" of window 1
+    	end tell
+	end tell'
+	EOF
+
+	osascript -e <<EOF 'tell application "System Events"
+    	tell process "Install Command Line Developer Tools"
+        click button "Agree" of window "License Agreement"
+    	end tell
+	end tell'
+	EOF
+	
+	echo -e "*****Wait and then press Return once CLT are installed."
+	read
+	}
+	
 ###############################
 function installEssentialApps()
 	{
 	echo -e "\tCleaning Launchpad..."
 	sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps WHERE title='APPNAME';" && killall Dock
-	
+
 	brew update
 	brew tap caskroom/cask
 	brew install caskroom/cask/brew-cask
