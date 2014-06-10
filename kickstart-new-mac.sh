@@ -74,18 +74,18 @@ function systemSettings()
     
 	echo -e "\tEnabling access to assistive devices..."
 	case ${OSTYPE} in
-		darwin10*) touch /private/var/db/.AccessibilityAPIEnabled;;
- 		darwin11*) touch /private/var/db/.AccessibilityAPIEnabled;;
- 		darwin12*) touch /private/var/db/.AccessibilityAPIEnabled;;
- 		darwin13*) sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
+		darwin10*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
+ 		darwin11*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
+ 		darwin12*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
+ 		darwin13*) sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
  	esac
 
 	echo -e "\tDisabling prompt to use drives for Time Machine..."
-    	defaults write /Library/Preferences/com.apple.TimeMachine.plist DoNotOfferNewDisksForBackup -bool true
+    	sudo defaults write /Library/Preferences/com.apple.TimeMachine.plist DoNotOfferNewDisksForBackup -bool true
     
     	echo -e "\tDisabling external accounts..."
     	# Disable external accounts (i.e. accounts stored on drives other than the boot drive.)
-    	defaults write /Library/Preferences/com.apple.loginwindow.plist EnableExternalAccounts -bool false
+    	sudo defaults write /Library/Preferences/com.apple.loginwindow.plist EnableExternalAccounts -bool false
 
 	echo -e "\tAdding information to login window..."
 	defaults write /Library/Preferences/com.apple.loginwindow.plist AdminHostInfo HostName
@@ -94,26 +94,26 @@ function systemSettings()
 	defaults write /Library/Preferences/com.apple.loginwindow.plist LoginwindowText "$loginWindowText"
 
 	echo -e "\tExpanding the print dialog by default..."
-	defaults write /Library/Preferences/.GlobalPreferences.plist PMPrintingExpandedStateForPrint -bool true
-	defaults write /Library/Preferences/.GlobalPreferences.plist PMPrintingExpandedStateForPrint2 -bool true
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist PMPrintingExpandedStateForPrint -bool true
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist PMPrintingExpandedStateForPrint2 -bool true
 
 	echo -e "\tExpanding the save dialog by default..."
-	defaults write /Library/Preferences/.GlobalPreferences.plist NSNavPanelExpandedStateForSaveMode -bool true
-	defaults write /Library/Preferences/.GlobalPreferences.plist NSNavPanelExpandedStateForSaveMode2 -bool true
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist NSNavPanelExpandedStateForSaveMode -bool true
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist NSNavPanelExpandedStateForSaveMode2 -bool true
 
 	echo -e "\tEnabling full keyboard access..."
 	# Enable full keyboard access (tab through all GUI buttons and fields, not just text boxes and lists)
-	defaults write /Library/Preferences/.GlobalPreferences.plist AppleKeyboardUIMode -int 3
+	sudo defaults write /Library/Preferences/.GlobalPreferences.plist AppleKeyboardUIMode -int 3
 	
 	echo -e "\tSpeeding up the shutdown delay..."
-	defaults write /System/Library/LaunchDaemons/com.apple.coreservices.appleevents.plist ExitTimeOut -int 5
-	defaults write /System/Library/LaunchDaemons/com.apple.securityd.plist ExitTimeOut -int 5
-	defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist ExitTimeOut -int 5
-	defaults write /System/Library/LaunchDaemons/com.apple.diskarbitrationd.plist ExitTimeOut -int 5
-	defaults write /System/Library/LaunchAgents/com.apple.coreservices.appleid.authentication.plist ExitTimeOut -int 5
+	sudo defaults write /System/Library/LaunchDaemons/com.apple.coreservices.appleevents.plist ExitTimeOut -int 5
+	sudo defaults write /System/Library/LaunchDaemons/com.apple.securityd.plist ExitTimeOut -int 5
+	sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist ExitTimeOut -int 5
+	sudo defaults write /System/Library/LaunchDaemons/com.apple.diskarbitrationd.plist ExitTimeOut -int 5
+	sudo defaults write /System/Library/LaunchAgents/com.apple.coreservices.appleid.authentication.plist ExitTimeOut -int 5
 	
 	echo -e "\tDisabling Spotlight indexing on /Volumes..."
-	defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+	sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 	
 	echo -e "\tDisabling smart-quotes and smart-dashes..."
 	defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
@@ -337,7 +337,7 @@ function safariSettings()
 	echo -e "\tShowing status bar..."	
 	defaults write com.apple.Safari ShowStatusBar -bool true
 
-	echo -e "\Enabling favorites bar..."
+	echo -e "\tEnabling favorites bar..."
 	defaults write com.apple.Safari ShowFavoritesBar -bool true	
 	}
 
@@ -348,7 +348,7 @@ function customPlist()
 	echo "******Writing to $orgName.plist******"
 	
 	# Creates a custom plist
-	defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
+	sudo defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
 	}
 
 
@@ -356,6 +356,7 @@ function customPlist()
 #-------BEGIN SCRIPT-----------
 #------------------------------	
 sudo -v
+killall Safari
 installEssentialApps
 quickLookPlugins
 systemSettings
@@ -364,19 +365,6 @@ dockSettings
 activityMonitorSettings
 safariSettings
 otherSettings
-powerSettings
 customPlist
-# Apps requiring user interaction to install last
-brew cask install lastpass-universal
-if [$? = 0 ];
-then
-	brew cask install crashplan
-	if [ $? = 0 ];then
-		brew cask install totalfinder
-	else
-		echo "TotalFinder fail."
-	fi
-else
-	echo "last-pass fail."
-fi
 echo "******COMPLETE******"
+echo -e "\n\nReboot now to apply all settings."
