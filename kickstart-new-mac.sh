@@ -356,7 +356,7 @@ function customPlist()
 #-------BEGIN SCRIPT-----------
 #------------------------------	
 defaults read /Library/Preferences/"$orgName" KickstartDeployed
-if [ $? = 1 ];then
+if [ $? = 0 ];then
 	systemSettings
 	finderSettings
 	dockSettings
