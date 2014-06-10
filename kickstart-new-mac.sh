@@ -7,6 +7,7 @@
 	loginWindowText=$(hostname)
 	osVersion=$(sw_vers -productVersion | awk -F. '{print $2}')
     	swVersion=$(sw_vers -productVersion)
+    	currentDate=$(date +"%Y-%m-%d %H:%M:%S")
 
 #----------FUNCTIONS---------
 ###############################
@@ -352,13 +353,11 @@ function customPlist()
 	echo "******Writing to $orgName.plist******"
 	sudo defaults read /Library/Preferences/"$orgName".plist KickstartDeployed
 	if [ $? = 0 ];then
-		sudo touch /Library/Preferences/"$orgName".plist
+		sudo defaults write /Library/Preferences/"$orgName".plist KickstartDeployed "$currentDate"
 	else
-		# Creates a custom plist
-		sudo defaults write /Library/Preferences/"$orgName".plist KickstartDeployed -bool true
+		sudo defaults write /Library/Preferences/"$orgName".plist KickstartDeployed "$currentDate"
 	fi
 	}
-
 
 #------------------------------		
 #-------BEGIN SCRIPT-----------
@@ -385,4 +384,6 @@ else
 	customPlist
 fi
 echo "******COMPLETE******"
-echo -e "\n\nReboot now to apply all settings.\n\n"
+echo -e "\n\n*********************************"
+echo -e "\n\nReboot now to apply all settings."
+echo -e "\n\n*********************************"
