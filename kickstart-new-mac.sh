@@ -80,8 +80,8 @@ function systemSettings()
 		darwin10*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin11*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin12*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
- 		darwin13*) sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);";
- 			sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
+ 		darwin13*) sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);";
+ 			sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
  	esac
 
 	echo -e "\tDisabling prompt to use drives for Time Machine..."
@@ -350,9 +350,13 @@ function safariSettings()
 function customPlist()
 	{
 	echo "******Writing to $orgName.plist******"
-	
-	# Creates a custom plist
-	sudo defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
+	sudo defaults read /Library/Preferences/"$orgName" KickstartDeployed
+	if [ $? = 0 ];then
+		sudo touch /Library/Preferences/"$orgName"
+	else
+		# Creates a custom plist
+		sudo defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
+	fi
 	}
 
 
@@ -381,4 +385,4 @@ else
 	customPlist
 fi
 echo "******COMPLETE******"
-echo -e "\n\nReboot now to apply all settings."
+echo -e "\n\nReboot now to apply all settings.\n\n"
