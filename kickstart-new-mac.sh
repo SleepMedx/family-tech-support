@@ -355,16 +355,26 @@ function customPlist()
 #------------------------------		
 #-------BEGIN SCRIPT-----------
 #------------------------------	
-sudo -v
-killall Safari
-installEssentialApps
-quickLookPlugins
-systemSettings
-finderSettings
-dockSettings
-activityMonitorSettings
-safariSettings
-otherSettings
-customPlist
+defaults read /Library/Preferences/"$orgName" KickstartDeployed
+if [ $? = 1 ];then
+	systemSettings
+	finderSettings
+	dockSettings
+	activityMonitorSettings
+	safariSettings
+	otherSettings
+	customPlist
+else
+	killall Safari
+	installEssentialApps
+	quickLookPlugins
+	systemSettings
+	finderSettings
+	dockSettings
+	activityMonitorSettings
+	safariSettings
+	otherSettings
+	customPlist
+fi
 echo "******COMPLETE******"
 echo -e "\n\nReboot now to apply all settings."
