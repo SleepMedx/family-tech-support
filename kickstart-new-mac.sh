@@ -350,12 +350,12 @@ function safariSettings()
 function customPlist()
 	{
 	echo "******Writing to $orgName.plist******"
-	sudo defaults read /Library/Preferences/"$orgName" KickstartDeployed
+	sudo defaults read /Library/Preferences/"$orgName".plist KickstartDeployed
 	if [ $? = 0 ];then
-		sudo touch /Library/Preferences/"$orgName"
+		sudo touch /Library/Preferences/"$orgName".plist
 	else
 		# Creates a custom plist
-		sudo defaults write /Library/Preferences/"$orgName" KickstartDeployed -bool true
+		sudo defaults write /Library/Preferences/"$orgName".plist KickstartDeployed -bool true
 	fi
 	}
 
@@ -363,7 +363,7 @@ function customPlist()
 #------------------------------		
 #-------BEGIN SCRIPT-----------
 #------------------------------	
-defaults read /Library/Preferences/"$orgName" KickstartDeployed
+defaults read /Library/Preferences/"$orgName".plist KickstartDeployed
 if [ $? = 0 ];then
 	systemSettings
 	finderSettings
