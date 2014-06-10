@@ -13,6 +13,9 @@
 ###############################
 function installEssentialApps()
 	{
+	echo -e "\tCleaning Launchpad..."
+	sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps WHERE title='APPNAME';" && killall Dock
+	
 	brew update
 	brew tap caskroom/cask
 	brew install caskroom/cask/brew-cask
@@ -71,6 +74,20 @@ function quickLookPlugins()
 	#rm ~/Downloads/QLEnscript.qlgenerator-1.0.zip
 	}
 
+##########################
+function resetQuickLook()
+	{
+	echo -e "\tResetting QuickLook..."
+	# Reset QuickLook plugins
+	qlmanage -r
+	# Reload QuickLook cache
+	qlmanage -r cache
+
+	# Remove QuickLook plists
+	rm ~/Library/Preferences/com.apple.quicklookconfig.plist
+	rm ~/Library/Preferences/com.apple.QuickLookDaemon.plist
+	}
+	
 ##########################
 function systemSettings()
 	{
@@ -138,11 +155,6 @@ function systemSettings()
 	
 	echo -e "\tSetting time to 24-hour..."
 	sudo defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
-	/usr/libexec/PlistBuddy -c "Add :AppleICUTDateFormatStrings:1:y-MM-d" /Library/Preferences/.GlobalPreferences.plist
-	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:1:kk:mm" /Library/Preferences/.GlobalPreferences.plist
-	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:2:kk:mm:ss" /Library/Preferences/.GlobalPreferences.plist
-	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:3:kk:mm:ss z" /Library/Preferences/.GlobalPreferences.plist
-	/usr/libexec/PlistBuddy -c "Add :AppleICUTimeFormatStrings:4:kk:mm:ss zzzz" /Library/Preferences/.GlobalPreferences.plist
 	}
 	
 #########################
@@ -308,6 +320,18 @@ function otherSettings()
 	
 	echo -e "\tMaking the scroll dragging speed faster..."
 	defaults write -g NSAutoscrollResponseMultiplier -float 3
+	
+	echo -e "\tMaking symbolic link to airport utility..."
+	sudo ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/sbin/airport
+	
+	echo -e "\tMaking symbolic link to Wireless Diagnostics utility..."
+	sudo ln -s /System/Library/CoreServices/Applications/Wireless\ Diagnostics.app /Applications/Utilities/Wireless\ Diagnostics.app
+	
+	echo -e "\tMaking symbolic link to Network Utility..."
+	sudo ln -s /System/Library/CoreServices/Applications/Network\ Utility.app /Applications/Utilities/Network\ Utility.app 
+	
+	echo -e "\tMaking symbolic link to Network Utility..."
+	sudo ln -s /System/Library/CoreServices/Applications/Screen\ Sharing.app /Applications/Screen\ Sharing.app 
 	}
 
 ##################################
@@ -372,6 +396,7 @@ function customPlist()
 #------------------------------	
 defaults read /Library/Preferences/"$orgName".plist KickstartDeployed
 if [ $? = 0 ];then
+	resetQuickLook
 	systemSettings
 	finderSettings
 	dockSettings
@@ -383,6 +408,7 @@ else
 	killall Safari
 	installEssentialApps
 	quickLookPlugins
+	resetQuickLook
 	systemSettings
 	finderSettings
 	dockSettings
