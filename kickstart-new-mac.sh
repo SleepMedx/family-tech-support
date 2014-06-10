@@ -25,6 +25,9 @@ function installEssentialApps()
 	
 	# OS improvements
 	brew cask install deathtodsstore
+	
+	echo -e "\Hiding  /opt..."
+	sudo chflags hidden /opt
 	}
 
 ###########################
@@ -54,11 +57,11 @@ function quickLookPlugins()
 	rm ~/Downloads/SuspiciousPackage.dmg
 
 	# Archive QuickLook Plugin
-	curl -o ~/Downloads/Archive.zip http://www.qlplugins.com/sites/default/files/plugins/Archive.zip
-	unzip ~/Downloads/Archive.zip
-	mv ~/Downloads/Archive/Archive.qlgenerator ~/Library/QuickLook/Archive.qlgenerator
-	rm -rf ~/Downloads/Archive
-	rm ~/Downloads/Archive.zip
+	#curl -o ~/Downloads/Archive.zip http://www.qlplugins.com/sites/default/files/plugins/Archive.zip
+	#unzip ~/Downloads/Archive.zip
+	#mv ~/Downloads/Archive/Archive.qlgenerator ~/Library/QuickLook/Archive.qlgenerator
+	#rm -rf ~/Downloads/Archive
+	#rm ~/Downloads/Archive.zip
 
 	# QLEnscript QuickLook Plugin
 	#curl -o ~/Downloads/QLEnscript.qlgenerator-1.0.zip http://www.qlplugins.com/sites/default/files/plugins/QLEnscript.qlgenerator-1.0.zip
@@ -77,7 +80,8 @@ function systemSettings()
 		darwin10*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin11*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
  		darwin12*) sudo touch /private/var/db/.AccessibilityAPIEnabled;;
- 		darwin13*) sudo sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
+ 		darwin13*) sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','com.apple.RemoteDesktopAgent',0,1,1,NULL);";
+ 			sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db "INSERT or REPLACE INTO access VALUES('kTCCServiceAccessibility','/usr/bin/osascript',0,1,1,NULL);";;
  	esac
 
 	echo -e "\tDisabling prompt to use drives for Time Machine..."
@@ -88,10 +92,10 @@ function systemSettings()
     	sudo defaults write /Library/Preferences/com.apple.loginwindow.plist EnableExternalAccounts -bool false
 
 	echo -e "\tAdding information to login window..."
-	defaults write /Library/Preferences/com.apple.loginwindow.plist AdminHostInfo HostName
+	sudo defaults write /Library/Preferences/com.apple.loginwindow.plist AdminHostInfo HostName
 
 	echo -e "\tSetting a login banner that reads: $loginWindowText..."
-	defaults write /Library/Preferences/com.apple.loginwindow.plist LoginwindowText "$loginWindowText"
+	sudo defaults write /Library/Preferences/com.apple.loginwindow.plist LoginwindowText "$loginWindowText"
 
 	echo -e "\tExpanding the print dialog by default..."
 	sudo defaults write /Library/Preferences/.GlobalPreferences.plist PMPrintingExpandedStateForPrint -bool true
@@ -116,20 +120,20 @@ function systemSettings()
 	sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 	
 	echo -e "\tDisabling smart-quotes and smart-dashes..."
-	defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-	defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+	sudo defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+	sudo defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 	
 	echo -e "\tMaking scrollbars always visible..."
-	defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+	sudo defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 	
 	echo -e "\tDisabling crash report dialogs..."
-	defaults write com.apple.CrashReporter DialogType none
+	sudo defaults write com.apple.CrashReporter DialogType none
 	
 	echo -e "\tEnabling secure virtual memory..."
 	sudo defaults write /Library/Preferences/com.apple.virtualMemory UseEncryptedSwap -bool yes
 	
 	echo -e "\tSetting time to 24-hour..."
-	defaults write NSGlobalDomain AppleICUForce12HourTime -bool false
+	sudo defaults write NSGlobalDomain AppleICUForce12HourTime -bool false
 	}
 	
 #########################
