@@ -14,7 +14,7 @@
 function installEssentialApps()
 	{
 	echo -e "\tCleaning Launchpad..."
-	sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE from apps WHERE title='APPNAME';" && killall Dock
+	sqlite3 ~/Library/Application\ Support/Dock/*.db "DELETE * from apps';" && killall Dock
 
 	brew update
 	brew tap caskroom/cask
