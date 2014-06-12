@@ -155,6 +155,27 @@ function systemSettings()
 	
 	echo -e "\tSetting time to 24-hour..."
 	sudo defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+	
+	ssdCheck=$(diskutil info / | awk '/Solid State/ {print $3}')
+	if [ $ssdCheck = "Yes" ];then
+		echo -e "\tSolid State Drive detected..."
+		# https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+		echo -e "\t\tDisabling Time Machine local snapshots..."
+		sudo tmutil disablelocal
+	
+		echo -e "\t\tDisabling hibernation..."
+		sudo pmset -a hibernatemode 0
+	
+		echo -e "\t\tRemoving the sleep image..."
+		sudo rm /Private/var/vm/sleepimage
+		sudo touch /Private/var/vm/sleepimage
+		sudo chflags uchg /Private/var/vm/sleepimage
+	
+		echo -e "\t\tDisabling Sudden Motion Sensor..."
+		sudo pmset -a sms 0
+	else
+		echo -e "\tRotational hard disk detected.  No additional setting..."
+	fi
 	}
 	
 #########################
