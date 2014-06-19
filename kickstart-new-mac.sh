@@ -399,6 +399,16 @@ function safariSettings()
 	defaults write com.apple.Safari ShowFavoritesBar -bool true	
 	}
 
+###############################
+function yosemiteSpecific()
+	{
+	if [ ${OSTYPE} = darwin14* ];then 
+		echo -e "\tEnabling dark mode..."
+		defaults write /Library/Preferences/.GlobalPreferences AppleInterfaceTheme Dark	
+	else
+		echo "Not Yosemite"
+	fi
+	}
 
 ######################
 function customPlist()
@@ -424,6 +434,7 @@ if [ $? = 0 ];then
 	activityMonitorSettings
 	safariSettings
 	otherSettings
+	yosemiteSpecific
 	customPlist
 else
 	killall Safari
@@ -436,6 +447,7 @@ else
 	activityMonitorSettings
 	safariSettings
 	otherSettings
+	yosemiteSpecific
 	customPlist
 fi
 echo "******COMPLETE******"
