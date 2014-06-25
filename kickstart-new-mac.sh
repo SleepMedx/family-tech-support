@@ -8,7 +8,6 @@
 	osVersion=$(sw_vers -productVersion | awk -F. '{print $2}')
     	swVersion=$(sw_vers -productVersion)
     	currentDate=$(date +"%Y-%m-%d %H:%M:%S")
-    	currentUser=$(whoami)
 
 #----------FUNCTIONS---------
 ###############################
@@ -431,15 +430,14 @@ function customPlist()
 ##################
 function setDock()
 	{
-	/usr/bin/dockutil --remove all "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
-	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --remove all
+	/usr/bin/dockutil --add /Applications/Safari.app 
+	/usr/bin/dockutil --add /Applications/Firefox.app 
+	/usr/bin/dockutil --add /Applications/Google\ Chrome.app 
+	/usr/bin/dockutil --add /Applications/Spotify.app 
+	/usr/bin/dockutil --add /Applications/System\ Preferences.app 
+	killall Dock
 	}
-
 #------------------------------		
 #-------BEGIN SCRIPT-----------
 #------------------------------	
