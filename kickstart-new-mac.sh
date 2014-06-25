@@ -8,6 +8,7 @@
 	osVersion=$(sw_vers -productVersion | awk -F. '{print $2}')
     	swVersion=$(sw_vers -productVersion)
     	currentDate=$(date +"%Y-%m-%d %H:%M:%S")
+    	currentUser=$(whoami)
 
 #----------FUNCTIONS---------
 ###############################
@@ -426,6 +427,18 @@ function customPlist()
 		sudo defaults write /Library/Preferences/"$orgName".plist KickstartDeployed "$currentDate"
 	fi
 	}
+	
+##################
+function setDock()
+	{
+	/usr/bin/dockutil --remove all "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	/usr/bin/dockutil --add /Applications/Safari.app "$currentUser"
+	}
 
 #------------------------------		
 #-------BEGIN SCRIPT-----------
@@ -440,6 +453,7 @@ if [ $? = 0 ];then
 	safariSettings
 	otherSettings
 	yosemiteSpecific
+	setDock
 	customPlist
 else
 	killall Safari
@@ -452,6 +466,7 @@ else
 	activityMonitorSettings
 	safariSettings
 	otherSettings
+	setDock
 	yosemiteSpecific
 	customPlist
 fi
