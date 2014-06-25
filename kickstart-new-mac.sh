@@ -156,6 +156,11 @@ function systemSettings()
 	echo -e "\tSetting time to 24-hour..."
 	sudo defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 	
+	echo -e "\tEnabling tap-to-click..."
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+	defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+	defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+	
 	ssdCheck=$(diskutil info / | awk '/Solid State/ {print $3}')
 	if [ $ssdCheck = "Yes" ];then
 		echo -e "\tSolid State Drive detected..."
